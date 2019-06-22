@@ -1,0 +1,8 @@
+/* Cute */
+
+@font-face {
+    font-family: "Cute";
+    src: url("../../assets/fonts/Cute/CuteFont-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}

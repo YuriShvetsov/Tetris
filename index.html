@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tetris</title>
+    <link rel="shortcut icon" icon href="images/icons/tetris.png" type="images" />
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <div class="page">
+
+        <div class="app" id="app">
+
+            <div class="app__col app__col_left">
+                <canvas class="app__canvas app__canvas_l" id="canvas-large"></canvas>
+                <div class="app__grid app__grid_hidden"></div>
+                <div class="app__game-over">
+                    <div class="game-over__text">
+                        <div class="game-over__game">game</div>
+                        <div class="game-over__over"> over</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app__col app__col_right">
+                <div class="app__header">
+                    <h1 class="app__logo app__text">Tetris</h1>
+                    <div class="app__menu menu">
+                        <button class="menu__btn app__btn">Settings</button>
+                        <div class="menu__popup">
+                            <input class="menu__checkbox" type="checkbox" value="theme" id="checkbox-dark-theme">
+                            <label for="checkbox-dark-theme" class="menu__label">
+                                <span class="menu__text app__text">Dark theme</span>
+                            </label>
+                            <br>
+                            <input class="menu__checkbox" type="checkbox" value="grid" id="checkbox-grid">
+                            <label for="checkbox-grid" class="menu__label">
+                                <span class="menu__text app__text">Grid</span>
+                            </label>
+                        </div>
+                    </div>
+                </div><!-- app__header -->
+
+                <div class="app__info info">
+
+                    <canvas class="app__canvas app__canvas_s" id="canvas-small"></canvas>
+
+                    <table class="info__tb tb">
+                        <tr class="tb__row">
+                            <td class="tb__cell">
+                                <span class="app__text">Speed:</span>
+                            </td>
+                            <td class="tb__cell tb__cell_right">
+                                <span class="app__text" id="speed"></span>
+                            </td>
+                        </tr>
+                        <tr class="tb__row">
+                            <td class="tb__cell">
+                                <span class="app__text">Score:</span>
+                            </td>
+                            <td class="tb__cell tb__cell_right">
+                                <span class="app__text" id="score"></span>
+                            </td>
+                        </tr>
+                        <tr class="tb__row">
+                            <td class="tb__cell">
+                                <span class="app__text">Hi-Score:</span>
+                            </td>
+                            <td class="tb__cell tb__cell_right">
+                                <span class="app__text" id="hiscore"></span>
+                            </td>
+                        </tr>
+                    </table><!-- info__tb -->
+                </div><!-- app__info -->
+
+                <div class="app__buttons">
+                    <button class="app__btn app__btn_size_l app__btn_theme_green" id="start">Start</button>
+                    <button class="app__btn app__btn_size_l app__btn_theme_orange" id="reset">Reset game</button>
+                </div><!-- app__buttons -->
+            </div>
+
+        </div><!-- app -->
+    
+    </div><!-- page -->
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
