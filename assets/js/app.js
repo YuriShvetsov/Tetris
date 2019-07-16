@@ -1,4 +1,4 @@
-/* Game "Tetris" by Yuri Shvetsov. Version 2.2 */
+/* Game "Tetris" by Yuri Shvetsov. Version 2.2. Data 06.2019 */
 
 (function(){
 
@@ -117,7 +117,7 @@
     };
 
     const colors = [
-        '#FF5733',  // orange
+        '#FF5733', // orange
         '#33A5FF', // blue
         '#9933FF', // violet
         '#81EE4E', // green
@@ -139,6 +139,8 @@
     /* Event handling. */
     /* Обработка событий. */
 
+    // Event tracking od control (keyboard):
+    // Отслеживание событий для управления (клавиатура):
     window.addEventListener('keydown', event => {
         if (game.play) { // only works during the game
             if (event.keyCode == 83) { // "S": move to down
@@ -164,14 +166,18 @@
         }
     }, false);
 
+    // Tracking event clicking on enter:
+    // Отслеживания события нажатия по "Enter":
     window.addEventListener('keyup', event => {
-        if (game.play) { // only works during the game
-            if (event.keyCode == 13) { // "Enter": rotate figure
+        if (game.play) {
+            if (event.keyCode == 13) {
                 rotateFig();
             }
         }
     }, false);
 
+    // Event tracking click on the buttons of the game:
+    // Отслеживание события нажатия по кнопкам игры:
     window.addEventListener('click', event => {
         if (event.target == buttonStart) { // start/pause
             toggleStatusGame();
@@ -269,6 +275,9 @@
         context.clearRect(0, 0, width, height);
     }
 
+
+    // Color theme of the game:
+    // Цветовая тема:
     function themeApp() {
         if (localStorage.getItem('darkTheme') == 'true') {
             checkboxDarkTheme.checked = true;
@@ -338,7 +347,8 @@
         return clockwise;
     }
 
-    // Getting coords rotated current figure (получение измененных начальных координат для поворота):
+    // Getting coords rotated current figure:
+    // Получение измененных начальных координат для поворота
     function getRotateFig() {
         const coords = curFig.fig.coords;
         const clockwise = getClockwise();
@@ -570,15 +580,17 @@
         worldMap.map = createWorldMap(worldMap.width, worldMap.height);
 
         buttonStart.innerHTML = 'Start';
-        // elemSpeed.innerHTML = game.speed;
-        // elemScore.innerHTML = game.score;
     }
 
+    // Showing the splash screen when loosing game:
+    // Показ заставки при проигрыше игры:
     function showGameOver() {
         game_over.classList.add('game-over__text_visible');
         game_over.classList.remove('game-over__text_hide');
     }
 
+    // Hiding the splash screen when loosing game:
+    // Скрытие заставки при проигрыше игры:
     function hideGameOver() {
         if (game_over.classList.contains('game-over__text_visible')) {
             game_over.classList.add('game-over__text_hide');
@@ -656,10 +668,14 @@
         }, 1200 / game.speed);
     }
 
+    // Creating menu with settings:
+    // Создание меню с настройками:
     function createMenu() {
         const menu_btn = document.querySelector('.menu__btn');
         const menu_popup = document.querySelector('.menu__popup');
 
+        // Tracking the click on the menu button:
+        // Отслеживание клика по кнопке меню:
         menu_btn.addEventListener('click', event => {
             if (!menu_btn.classList.contains('menu__btn_active')) {
                 menu_btn.classList.add('menu__btn_active');
@@ -673,9 +689,13 @@
                 menu_popup.classList.remove('menu__popup_visible');
                 menu_popup.classList.add('menu__popup_hidden');
             }
+            // Remove focus from menu button:
+            // удаление фокуса с кнопки меню:
             menu_btn.blur();
         });
 
+        // Tracking the click on the page with the active menu:
+        // Отслеживание клика по странице при активном меню:
         document.addEventListener('click', event => {
             if (!menu_btn.classList.contains('menu__btn_active')) {
                 return;
@@ -689,6 +709,8 @@
             }
         });
 
+        // Tracking a checkbox with a "dark theme":
+        // Отслеживание клика по чекбоксу с "темная тема":
         checkboxDarkTheme.addEventListener('click', event => {
             if (checkboxDarkTheme.checked) {
                 app.classList.add('app_theme_dark');
@@ -707,6 +729,8 @@
             }
         });
 
+        // Tracking a checkbox with a "grid":
+        // Отслеживание клика по чекбоксу с "сетка":
         checkboxGrid.addEventListener('click', event => {
             if (checkboxGrid.checked) {
                 grid.classList.remove('app__grid_hidden');
@@ -718,6 +742,8 @@
         });
     }
 
+    // Hiding background of page when width less 740px:
+    // Скрытие фона страницы при ширине менее 740 пикселей:
     function pageBg() {
         if (window.innerHeight < 740) {
             page.classList.add('page_no-bg');
