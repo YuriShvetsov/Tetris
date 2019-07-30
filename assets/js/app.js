@@ -1,4 +1,4 @@
-/* Game "Tetris" by Yuri Shvetsov. Version 2.2. Data 06.2019 */
+/* Game "Tetris" by Yuri Shvetsov. Version 2.2. Date 06.2019 */
 
 (function(){
 
@@ -334,6 +334,7 @@
     }
 
     /* Checking and changing position current figure. */
+    /* CПроверка и изменение положения текущей цифры. */
 
     // Getting the rotation direction of the current figure:
     // Получение направления вращения фигуры:
