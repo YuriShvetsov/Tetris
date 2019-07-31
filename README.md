@@ -3,7 +3,7 @@ Learning project on javascript.
 
 Author: Yuri Shvetsov
 
-Date: 06/19
+Date: 17/04/19
 
 Version: 2.2
 
