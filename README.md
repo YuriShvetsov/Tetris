@@ -7,6 +7,8 @@ Date: 17/04/19
 
 Version: 2.2
 
+Link: https://yurishvetsov.github.io/tetris/
+
 ------------
 The objectives that were pursued when creating this game:
 - semantically correct approaches to creating a structure,
