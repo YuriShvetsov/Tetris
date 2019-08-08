@@ -117,10 +117,10 @@
     };
 
     const colors = [
-        '#FF5733', // orange
-        '#33A5FF', // blue
-        '#9933FF', // violet
-        '#81EE4E', // green
+        '#ff5526', // orange
+        '#33a5ff', // blue
+        '#9933ff', // violet
+        '#18f04e', // green
     ];
 
     let frame, keyFrame;

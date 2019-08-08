@@ -27,24 +27,27 @@
                 </div>
                 <div class="app__info-controls info-controls">
                     <div class="info-controls__button"></div>
-                    <table class="info-controls__content">
-                        <tr>
-                            <td><span class="info-controls__text app__text">Enter:</span></td>
-                            <td><span class="info-controls__text app__text">Rotate</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="info-controls__text app__text">A:</span></td>
-                            <td><span class="info-controls__text app__text">Left</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="info-controls__text app__text">S:</span></td>
-                            <td><span class="info-controls__text app__text">Down</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="info-controls__text app__text">D:</span></td>
-                            <td><span class="info-controls__text app__text">Right</span></td>
-                        </tr>
-                    </table>
+                    <div class="info-controls__content">
+                        <div class="info-controls__title app__text">Controls</div>
+                        <table class="info-controls__table">
+                            <tr>
+                                <td><span class="info-controls__text app__text">Rotate:</span></td>
+                                <td><span class="info-controls__text app__text">Enter</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="info-controls__text app__text">Left:</span></td>
+                                <td><span class="info-controls__text app__text">"A"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="info-controls__text app__text">Down:</span></td>
+                                <td><span class="info-controls__text app__text">"S"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="info-controls__text app__text">Right:</span></td>
+                                <td><span class="info-controls__text app__text">"D"</span></td>
+                            </tr>
+                        </table>
+                    </div><!-- info-controls__content -->
                 </div><!-- info-controls -->
             </div>
 
@@ -54,15 +57,19 @@
                     <div class="app__menu menu">
                         <button class="menu__btn app__btn">Settings</button>
                         <div class="menu__popup">
-                            <input class="menu__checkbox" type="checkbox" value="theme" id="checkbox-dark-theme">
-                            <label for="checkbox-dark-theme" class="menu__label">
-                                <span class="menu__text app__text">Dark theme</span>
-                            </label>
-                            <br>
-                            <input class="menu__checkbox" type="checkbox" value="grid" id="checkbox-grid">
-                            <label for="checkbox-grid" class="menu__label">
-                                <span class="menu__text app__text">Grid</span>
-                            </label>
+                            <div class="menu__title app__text">Settings</div>
+                            <div class="menu__row">
+                                <input class="menu__checkbox" type="checkbox" value="theme" id="checkbox-dark-theme">
+                                <label for="checkbox-dark-theme" class="menu__label">
+                                    <span class="menu__text app__text">Dark theme</span>
+                                </label>
+                            </div>
+                            <div class="menu__row">
+                                <input class="menu__checkbox" type="checkbox" value="grid" id="checkbox-grid">
+                                <label for="checkbox-grid" class="menu__label">
+                                    <span class="menu__text app__text">Grid</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div><!-- app__header -->
