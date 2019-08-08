@@ -23,3 +23,5 @@ The objectives that were pursued when creating this game:
 Screenshots:
 
 ![Image alt](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.gif)
+
+[![Watch the video](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.png)](https://youtu.be/mS0jGBM-WTg)
