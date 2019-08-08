@@ -16,10 +16,11 @@ The objectives that were pursued when creating this game:
 - use of **Flexbox** technology,
 - use of the **BEM** methodology (block, element, modifier),
 - use of some functions and methods of JS,
+- for drawing figures has been used canvas,
 - simple animations,
 - own design.
 
 ------------
-Screenshots:
+Link to video on YouTube:
 
 [![Watch the video](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.gif)](https://youtu.be/mS0jGBM-WTg)
