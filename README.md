@@ -15,8 +15,8 @@ The objectives that were pursued when creating this game:
 - use of **HTML5** and **CSS3** standards,
 - use of **Flexbox** technology,
 - use of the **BEM** methodology (block, element, modifier),
-- use of some functions and methods of JS,
-- for drawing figures has been used canvas,
+- use of some functions and methods of **JS**,
+- for drawing figures has been used **Canvas**,
 - simple animations,
 - own design.
 
