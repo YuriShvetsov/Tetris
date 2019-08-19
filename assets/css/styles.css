@@ -171,7 +171,7 @@ body {
     border-radius: 2px;
     outline: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 100ms ease-in-out;
 }
 
 .app__btn:hover {
@@ -252,7 +252,7 @@ body {
     filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
     opacity: 1;
     overflow: hidden;
-    transition: opacity 0.15s ease-in-out;
+    transition: opacity 100ms ease-in-out;
 }
 
 .menu__btn:hover {
@@ -278,16 +278,16 @@ body {
 }
 
 .menu__popup_hidden {
-    animation: menu_hide 0.15s ease-in-out;
-    -webkit-animation: menu_hide 0.15s ease-in-out;
+    animation: menu_hide 100ms ease-in-out;
+    -webkit-animation: menu_hide 100ms ease-in-out;
     animation-fill-mode: both;
     -webkit-animation-fill-mode: both;
     visibility: visible;
 }
 
 .menu__popup_visible {
-    animation: menu_show 0.15s ease-in-out;
-    -webkit-animation: menu_show 0.15s ease-in-out;
+    animation: menu_show 100ms ease-in-out;
+    -webkit-animation: menu_show 100ms ease-in-out;
     animation-fill-mode: both;
     -webkit-animation-fill-mode: both;
     visibility: visible;
@@ -311,7 +311,7 @@ body {
     border-radius: 14px;
     box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 100ms ease-in-out;
 }
 
 .menu__label::after {
@@ -327,7 +327,7 @@ body {
     border-radius: 50%;
     box-shadow: 0 0 6px rgba(0,0,0,0.2);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 100ms ease-in-out;
 }
 
 .menu__checkbox {
@@ -408,7 +408,7 @@ body {
     opacity: 0;
     filter: saturate(2);
     cursor: pointer;
-    transition: all 300ms ease;
+    transition: all 100ms ease;
 }
 
 .app__col_left:hover .info-controls__button {
@@ -431,7 +431,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transform: translate(-5px, -25px) scale(0.95);
-    transition: all 0.15s ease-in-out;
+    transition: all 100ms ease-in-out;
 }
 
 .info-controls__table {
