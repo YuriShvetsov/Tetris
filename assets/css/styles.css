@@ -20,14 +20,19 @@ body {
     width: 100vw;
     height: 100vh;
     background: 
+        url(../../images/nature-sunlight.png) no-repeat,
         url(../../images/bg-tetris-theme.png) no-repeat,
         linear-gradient(to bottom, #FF512F, #DD2476);
-    background-position: bottom;
-    background-size: 1992px 193px, contain;
+    background-position: center, bottom;
+    background-size: cover, 1992px 193px, contain;
 }
 
 .page_no-bg {
-    background: linear-gradient(to bottom, #FF512F, #DD2476);
+    background:
+        url(../../images/nature-sunlight.png) no-repeat,
+        linear-gradient(to bottom, #FF512F, #DD2476);
+    background-position: center, center;
+    background-size: cover, cover;
 }
 
 .app {
