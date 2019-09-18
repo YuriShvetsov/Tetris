@@ -21,6 +21,6 @@ The objectives that were pursued when creating this game:
 - own design.
 
 ------------
-Link to video on YouTube:
+Screenshot:
 
-[![Watch the video](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.gif)](https://youtu.be/mS0jGBM-WTg)
+![Image alt](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.gif)
