@@ -19,20 +19,18 @@ body {
     align-items: flex-start;
     width: 100vw;
     height: 100vh;
-    background: 
-        url(../../images/nature-sunlight.png) no-repeat,
-        url(../../images/bg-tetris-theme.png) no-repeat,
-        linear-gradient(to bottom, #FF512F, #DD2476);
-    background-position: center, bottom;
-    background-size: cover, 1992px 193px, contain;
 }
 
-.page_no-bg {
-    background:
-        url(../../images/nature-sunlight.png) no-repeat,
-        linear-gradient(to bottom, #FF512F, #DD2476);
-    background-position: center, center;
-    background-size: cover, cover;
+.page_light {
+    background: url(../../images/background-day.png) no-repeat, linear-gradient(to bottom, #ff592f, #ec1a6a);
+    background-position: center;
+    background-size: cover;
+}
+
+.page_dark {
+    background: url(../../images/background-day.png) no-repeat, linear-gradient(to bottom, #892fff, #2455dd);
+    background-position: center;
+    background-size: cover;
 }
 
 .app {

@@ -283,10 +283,12 @@
             checkboxDarkTheme.checked = true;
             app.classList.add('app_theme_dark');
             worldMap.color = '#fff';
+            page.classList.add('page_dark');
         } else {
             checkboxDarkTheme.checked = false;
             app.classList.remove('app_theme_dark');
             worldMap.color = '#aaa';
+            page.classList.add('page_light');
         }
 
         if (localStorage.getItem('grid') == 'true') {
@@ -720,6 +722,7 @@
                 drawCurFig();
                 drawWorldMap();
                 localStorage['darkTheme'] = true;
+                togglePageTheme();
             } else {
                 app.classList.remove('app_theme_dark');
                 worldMap.color = '#aaa';
@@ -727,6 +730,7 @@
                 drawCurFig();
                 drawWorldMap();
                 localStorage['darkTheme'] = false;
+                togglePageTheme();
             }
         });
 
@@ -743,14 +747,16 @@
         });
     }
 
-    // Hiding background of page when width less 740px:
-    // Скрытие фона страницы при ширине менее 740 пикселей:
-    function pageBg() {
-        if (window.innerHeight < 740) {
-            page.classList.add('page_no-bg');
+    function togglePageTheme() {
+        if (page.classList.contains('page_light')) {
+            page.classList.remove('page_light');
+            page.classList.add('page_dark');
+        } else if (page.classList.contains('page_dark')) {
+            page.classList.remove('page_dark');
+            page.classList.add('page_light');
         }
     }
 
-    pageBg();
+
 
 }());
