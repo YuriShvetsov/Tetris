@@ -28,7 +28,7 @@ body {
 }
 
 .page_dark {
-    background: url(../../images/background-day.png) no-repeat,  linear-gradient(to bottom, #12151d, #2455dd);
+    background: url(../../images/background-night.png) no-repeat,  linear-gradient(to bottom, #12151d, #2455dd);
     background-position: center, center;
     background-size: cover, cover;
 }
