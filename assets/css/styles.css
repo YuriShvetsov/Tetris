@@ -22,15 +22,15 @@ body {
 }
 
 .page_light {
-    background: url(../../images/bg-tetris-theme.png) no-repeat, url(../../images/background-day.png) no-repeat, linear-gradient(to bottom, #ff5125, #ad08cc);
-    background-position: bottom, center, center;
-    background-size: 1992px 193px, cover, cover;
+    background: url(../../images/background-day.png) no-repeat, linear-gradient(45deg, #ff5125, #0059fb);
+    background-position: center, center;
+    background-size: cover, cover;
 }
 
 .page_dark {
-    background: url(../../images/bg-tetris-theme.png) no-repeat, url(../../images/background-day.png) no-repeat,  linear-gradient(to bottom, #12151d, #2455dd);
-    background-position: bottom, center, center;
-    background-size: 1992px 193px, cover, cover;
+    background: url(../../images/background-day.png) no-repeat,  linear-gradient(to bottom, #12151d, #2455dd);
+    background-position: center, center;
+    background-size: cover, cover;
 }
 
 .app {
