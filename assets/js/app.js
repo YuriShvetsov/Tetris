@@ -59,7 +59,7 @@
         grid: false,
         speed: 1,
         score: 0,
-        hiScore: localStorage.getItem('hi_score'),
+        hiScore: localStorage.getItem('hiScore'),
         counter: 1
     }
 
@@ -301,14 +301,14 @@
     // Сохранение значения hi-score в localStorage:
     function saveHiScore() {
         if (game.hiScore < game.score) {
-            localStorage['hi_score'] = game.score;
-            elemHiScore.innerHTML = localStorage['hi_score'];
-            game.hiScore = localStorage['hi_score'];
+            localStorage['hiScore'] = game.score;
+            elemHiScore.innerHTML = localStorage['hiScore'];
+            game.hiScore = localStorage['hiScore'];
         } else {
-            elemHiScore.innerHTML = localStorage['hi_score'];
+            elemHiScore.innerHTML = localStorage['hiScore'];
         }
         
-        if (!localStorage['hi_score']) {
+        if (!localStorage['hiScore']) {
             elemHiScore.innerHTML = 0;
         }
     }

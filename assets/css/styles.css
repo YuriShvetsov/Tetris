@@ -394,6 +394,7 @@ body {
     opacity: 0;
     filter: saturate(2);
     transition: all 100ms ease;
+    cursor: pointer;
 }
 
 .app__col_left:hover .info-controls__button {
