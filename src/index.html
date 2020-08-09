@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tetris</title>
+    <link rel="shortcut icon" icon href="assets/icons/tetris.png" type="images"/>
+</head>
+<body>
+
+    <div id="app" class="app app_theme_light">
+        <div class="app__container">
+            <div class="app__game-field">
+                <canvas class="canvas canvas_game-field" id="game-field"></canvas>
+                <div class="grid grid_hidden"></div>
+                <div class="game-over-caption">
+                    <div class="game-over-caption__left">Game</div>
+                    <div class="game-over-caption__right"> over</div>
+                </div><!-- game-over-caption -->
+                <div class="info">
+                    <button class="info__btn js-info-btn">Info</button>
+                    <div class="info__popup js-info-popup">
+                        <div class="info__title">Controls</div>
+                        <table class="info__table table">
+                            <tr class="table__row">
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Rotate:</span></td>
+                                <td class="table__cell"><span class="info__text">Enter</span></td>
+                            </tr>
+                            <tr class="table__row">
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Left:</span></td>
+                                <td class="table__cell"><span class="info__text">"A"</span></td>
+                            </tr>
+                            <tr class="table__row">
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Down:</span></td>
+                                <td class="table__cell"><span class="info__text">"S"</span></td>
+                            </tr>
+                            <tr class="table__row">
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Right:</span></td>
+                                <td class="table__cell"><span class="info__text">"D"</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!-- info -->
+            </div><!-- app__game-field -->
+            <div class="app__side side">
+                <div class="side__header">
+                    <h1 class="app__logo">Tetris</h1>
+                    <div class="side__menu menu">
+                        <button class="menu__btn js-menu-btn" data-prop="openPopup">Settings</button>
+                        <div class="menu__popup popup">
+                            <div class="menu__title">Settings</div>
+                            <div class="menu__row">
+                                <input class="menu__checkbox" type="checkbox" value="theme" id="checkbox-dark-theme">
+                                <label for="checkbox-dark-theme" class="menu__label">
+                                    <span class="menu__text app__text">Dark theme</span>
+                                </label>
+                            </div>
+                            <div class="menu__row">
+                                <input class="menu__checkbox" type="checkbox" value="grid" id="checkbox-grid">
+                                <label for="checkbox-grid" class="menu__label">
+                                    <span class="menu__text app__text">Grid</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div><!-- menu -->
+                </div><!-- side__header -->
+                <div class="side__game-state game-state">
+                    <canvas class="canvas canvas_next-figure" id="next-figure"></canvas>
+                    <table class="game-state__table table">
+                        <tr class="table__row">
+                            <td class="table__cell table__cell_align_right">
+                                <span>Level:</span>
+                            </td>
+                            <td class="table__cell">
+                                <span class="js-level">0</span>
+                            </td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell table__cell_align_right">
+                                <span>Speed:</span>
+                            </td>
+                            <td class="table__cell">
+                                <span class="js-speed">0</span>
+                            </td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell table__cell_align_right">
+                                <span>Score:</span>
+                            </td>
+                            <td class="table__cell">
+                                <span class="js-score">0</span>
+                            </td>
+                        </tr>
+                        <tr class="table__row">
+                            <td class="table__cell table__cell_align_right">
+                                <span>Hi-Score:</span>
+                            </td>
+                            <td class="table__cell">
+                                <span class="js-hiscore">0</span>
+                            </td>
+                        </tr>
+                    </table><!-- info__tb -->
+                </div><!-- side__game-state -->
+                <div class="side__controls">
+                    <button class="controls-btn controls-btn_green js-start" data-prop="startGame">Start</button>
+                    <button class="controls-btn controls-btn_red js-reset" data-prop="resetGame">Reset game</button>
+                </div><!-- side-controls -->
+            </div><!-- app__side -->
+            <div class="overlay js-overlay" data-prop="close"></div>
+        </div><!-- app__container -->
+    </div><!-- app -->    
+
+</body>
+</html>

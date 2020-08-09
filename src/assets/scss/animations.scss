@@ -1,0 +1,113 @@
+/* Animations */
+
+@keyframes game-over-opacity {
+
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+@keyframes game-over-translate {
+
+    0% {
+        margin-right: 400%;
+    }
+
+    100% {
+        margin-right: 0;
+    }
+
+}
+
+@keyframes game-over-hide {
+
+    0% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 0;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+
+}
+
+@keyframes popup_show {
+
+    0% {
+        visibility: visible;
+    }
+
+    5% {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
+
+}
+
+@keyframes popup_hide {
+
+    0% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
+
+    95% {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+
+}
+
+@keyframes overlay_show {
+
+    0% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
+
+    95% {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+
+}
+
+@keyframes overlay_hide {
+
+    0% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
+
+    95% {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+
+}

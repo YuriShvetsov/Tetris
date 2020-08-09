@@ -1,0 +1,417 @@
+@import './animations.scss';
+
+/* Main styles */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+
+button,
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+.app > * {
+    font-family: 'Cute';
+    color: #222;
+}
+
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 100vh;
+    background: #333;
+}
+
+.app_theme_light {
+    background: url(../images/background-day.png) no-repeat, linear-gradient(45deg, #ff5125, #0059fb);
+    background-position: center, center;
+    background-size: cover, cover;
+}
+
+.app_theme_dark {
+    background: url(../images/background-night.png) no-repeat, linear-gradient(to bottom, #12151d, #2455dd);
+    background-position: center, center;
+    background-size: cover, cover;
+}
+
+.app__container {
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0;
+    position: relative;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 10px 25px -10px rgba(0,0,0,0.8);
+    overflow: hidden;
+    user-select: none;
+    z-index: 100;
+}
+
+.app__logo {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+}
+
+.popup {
+    visibility: hidden;
+    opacity: 0;
+    z-index: 300;
+}
+
+.popup_visible {
+    animation: popup_show 100ms ease-in-out;
+    animation-fill-mode: both;
+    visibility: visible;
+}
+
+.popup_hidden {
+    animation: popup_hide 100ms ease-in-out;
+    animation-fill-mode: both;
+    visibility: visible;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 1, 71, 0.1);
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
+    pointer-events: none;
+    z-index: 200;
+}
+
+.overlay_visible {
+    opacity: 1;
+}
+
+/* Left part */
+
+.app__game-field {
+    position: relative;
+}
+
+.canvas_game-field {
+    display: block;
+    position: relative;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.info__btn {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    text-indent: -999px;
+    background: url(../icons/info.svg) no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    border: none;
+    opacity: 0;
+    overflow: hidden;
+    filter: saturate(2);
+    cursor: pointer;
+    transition: all 100ms ease;
+    outline: none;
+    z-index: 300;
+}
+
+.app__game-field:hover .info__btn {
+    opacity: 0.6;
+}
+
+.app__game-field .info__btn:hover {
+    opacity: 1;
+}
+
+.info__popup {
+    padding: 10px 15px;
+    position: absolute;
+    left: 13px;
+    top: 61px;
+    background: #fff;
+    border: 1px solid #f6faff;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px -2px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-5px, -25px) scale(0.95);
+    transition: all 100ms ease-in-out;
+    z-index: 300;
+}
+
+.info__btn:hover~.info__popup {
+    opacity: 1;
+    transform: translate(0, -15px) scale(1);
+    visibility: visible;
+}
+
+.info__btn:hover ~ .overlay {
+    opacity: 1;
+}
+
+.info__title {
+    margin-bottom: 7px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+}
+
+.info__text {
+    font-size: 24px;
+}
+
+.game-over-caption {
+    display: none;
+}
+
+/* Right part */
+
+.side {
+    display: flex;
+    flex-direction: column;
+    width: 210px;
+    padding: 10px;
+}
+
+.side__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    position: relative;
+}
+
+.menu {
+    display: block;
+}
+
+.menu__btn {
+    display: block;
+    width: 20px;
+    height: 20px;   
+    position: absolute;
+    right: 0;
+    top: 6px;
+    text-indent: -999px;
+    background: url(../icons/menu-black.svg) no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    outline: none;
+    border: none;
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity 100ms ease-in-out;
+}
+
+.menu__btn:hover {
+    opacity: 0.8;
+}
+
+.menu__popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: calc(100% - 4px);
+    padding: 10px 20px 15px;
+    position: absolute;
+    right: 2px;
+    top: 36px;
+    background: #fff;
+    border: 1px solid #f6faff;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px -2px rgba(0,0,0,0.3);
+}
+
+.menu__title {
+    margin-bottom: 7px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+}
+
+.menu__row {
+    width: 100%;
+}
+
+.menu__row:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.menu__text {
+    padding-left: 20px;
+    font-size: 24px;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.menu__checkbox {
+    display: none;
+    visibility: hidden;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.menu__label {
+    width: 100%;
+    padding-left: 20px;
+    position: relative;
+}
+
+.menu__label::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 14px;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    background: #9c9c9c;
+    border-radius: 14px;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: background 100ms ease-in-out;
+}
+
+.menu__label::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -3px;
+    top: -4px;
+    background: #fff;
+    border: 1px solid #f8f8f8;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
+.menu__checkbox:checked + .menu__label::before {
+    background: #0ce743;
+}
+
+.menu__checkbox:checked + .menu__label::after {
+    left: 11px;
+    box-shadow: 0 0 6px #0ce743;
+}
+
+.game-state {
+    margin: 15px 0;
+}
+
+.canvas_next-figure {
+    display: block;
+    // width: 100px;
+    margin: 10px auto;
+}
+
+.game-state__table {
+    font-size: 30px;
+}
+
+.table {
+    border-spacing: 7px 0;
+}
+
+.table__cell {
+    text-align: left;
+}
+
+.table__cell_align_right {
+    text-align: right;
+}
+
+.side__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.controls-btn {
+    width: 100%;
+    display: block;
+    padding: 0;
+    position: relative;
+    font-size: 24px;
+    line-height: 1.4em;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    transition: all 100ms ease-in-out;
+}
+
+.controls-btn:hover {
+    text-shadow: 0 0 4px #fff;
+}
+
+.controls-btn:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.controls-btn::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-radius: 0 0 2px 2px;
+}
+
+.controls-btn_green {
+    background: #0ce743;
+}
+
+.controls-btn_green:hover {
+    background: #0bd83e;
+}
+
+.controls-btn_green::before {
+    background: #02ac48;
+}
+
+.controls-btn_red {
+    background: #ff410d;
+}
+
+.controls-btn_red:hover {
+    background: #f13f0e;
+}
+
+.controls-btn_red::before {
+    background: #bd340f;
+}

@@ -1,13 +1,11 @@
 ## Tetris
-Learning project on javascript.
+Learning project on JavaScript
 
 Author: Yuri Shvetsov
 
-Date: 17/04/19
+Date: 09/08/20
 
-Version: 2.2
-
-Link: https://yurishvetsov.github.io/tetris/
+Version: 3.0
 
 ------------
 The objectives that were pursued when creating this game:
@@ -17,10 +15,11 @@ The objectives that were pursued when creating this game:
 - use of the **BEM** methodology (block, element, modifier),
 - use of some functions and methods of **JS**,
 - for drawing figures has been used **Canvas**,
+- pattern **MVC**,
 - simple animations,
 - own design.
 
 ------------
 Screenshot:
 
-![Image alt](https://github.com/YuriShvetsov/tetris/blob/master/screens/screen.gif)
+![Image alt](https://github.com/YuriShvetsov/tetris/blob/master/screenshots/screen.gif)
