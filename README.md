@@ -22,4 +22,4 @@ The objectives that were pursued when creating this game:
 ------------
 Screenshot:
 
-![Image alt](https://github.com/YuriShvetsov/tetris/blob/master/screenshots/screen.gif)
+![Image alt](https://github.com/YuriShvetsov/tetris-js/blob/dev/screenshots/screen.gif)
