@@ -1,30 +1,33 @@
 const view = {
+    // Основные элементы страницы, а также параметры холстов
     elements: {
         gameField: {
             canvas: app.querySelector('#game-field'),
-            context: null
+            context: null,
+            sizePx: {}
         },
         nextFigure: {
             canvas: app.querySelector('#next-figure'),
-            context: null
+            context: null,
+            sizePx: {}
         },
         menuBtn: app.querySelector('.js-menu-btn'),
         menuPopup: app.querySelector('.js-menu-popup'),
         level: app.querySelector('.js-level'),
         speed: app.querySelector('.js-speed'),
         score: app.querySelector('.js-score'),
-        hiScore: app.querySelector('.js-hiscore'),
+        hiscore: app.querySelector('.js-hiscore'),
         startBtn: app.querySelector('.js-start'),
         resetBtn: app.querySelector('.js-reset'),
         overlay: app.querySelector('.js-overlay')
     },
     properties: {
-        gameFieldSizePx: null,
-        nextFigureSizePx: null,
         pixelDepth: 2,
         squareSize: 20,
         padding: 0
     },
+
+    // Инициализация параметров игры
     init: function(app) {
         this.app = app;
         this.initCanvas();
@@ -33,8 +36,8 @@ const view = {
         this.elements.gameField.context = this.elements.gameField.canvas.getContext('2d');
         this.elements.nextFigure.context = this.elements.nextFigure.canvas.getContext('2d');
 
-        this.setCanvasSize(this.elements.gameField, this.properties.gameFieldSizePx.width, this.properties.gameFieldSizePx.height);
-        this.setCanvasSize(this.elements.nextFigure, this.properties.nextFigureSizePx.width, this.properties.nextFigureSizePx.height);
+        this.setCanvasSize(this.elements.gameField, this.elements.gameField.sizePx.width, this.elements.gameField.sizePx.height);
+        this.setCanvasSize(this.elements.nextFigure, this.elements.nextFigure.sizePx.width, this.elements.nextFigure.sizePx.height);
     },
     setProps: function(props) {
         let gameFieldSize = props['gameFieldSize'];
@@ -45,17 +48,15 @@ const view = {
             return;
         }
 
-        this.properties.gameFieldSizePx = {
+        this.elements.gameField.sizePx = {
             width: gameFieldSize.width * this.properties.pixelDepth * this.properties.squareSize,
             height: gameFieldSize.height * this.properties.pixelDepth * this.properties.squareSize
         };
 
-        this.properties.nextFigureSizePx = {
+        this.elements.nextFigure.sizePx = {
             width: nextFigureSize.width * this.properties.pixelDepth * this.properties.squareSize,
             height: nextFigureSize.height * this.properties.pixelDepth * this.properties.squareSize
         };
-
-        // console.log(this.properties);
     },
     setCanvasSize: function(element, width, height) {
         element.canvas.width = width;
@@ -64,6 +65,8 @@ const view = {
         element.canvas.style.height = height / this.properties.pixelDepth + 'px';
         element.context.scale(this.properties.pixelDepth, this.properties.pixelDepth);
     },
+
+    // Отрисовка на холстах
     renderSquare: function(context, x, y, color) {
         let coordX = x * this.properties.squareSize;
         let coordY = y * this.properties.squareSize;
@@ -73,24 +76,61 @@ const view = {
     },
     renderCurFigure: function(curFigure) {
         curFigure.figure.coords.forEach(square => {
-            let coordX = square[0] + curFigure.coords.x;
-            let coordY = square[1] + curFigure.coords.y;
+            let coordX = square[0] + curFigure.centerCoords.x;
+            let coordY = square[1] + curFigure.centerCoords.y;
 
             this.renderSquare(this.elements.gameField.context, coordX, coordY, curFigure.color);
         });
     },
+    renderWorldMap: function(world) {
+        for (let y in world.map) {
+            let row = world.map[y];
+
+            for (let x in row) {
+                let cell = row[x];
+
+                if (cell === true) {
+                    this.renderSquare(this.elements.gameField.context, x, y, world.color);
+                }
+            }
+        }
+    },
+    renderGameField: function(curFigure, worldMap) {
+        this.clearCanvas(this.elements.gameField);
+        this.renderCurFigure(curFigure);
+        this.renderWorldMap(worldMap);
+    },
+    renderNextFigure: function(nextFigure) {
+        nextFigure.figure.coords.forEach(square => {
+            let coordX = square[0] + nextFigure.centerCoords.x;
+            let coordY = square[1] + nextFigure.centerCoords.y;
+
+            this.renderSquare(this.elements.nextFigure.context, coordX, coordY, nextFigure.color);
+        });
+    },
+    clearCanvas: function(canvas) {
+        canvas.context.clearRect(0, 0, canvas.sizePx.width - 1, canvas.sizePx.height - 1);
+    },
+    clearAll: function() {
+        this.clearCanvas(this.elements.gameField);
+        this.clearCanvas(this.elements.nextFigure);
+    },
+
+    // Обновление текстовых элементов
     updateTextElement: function(element, text) {
         if (!this.elements[element]) return;
 
         this.elements[element].innerHTML = text;
     },
-    updateGameState: function(state) {
-        Object.keys(state).forEach(key => {
+    updateStats: function(stats) {
+        Object.keys(stats).forEach(key => {
             if (this.elements[key]) {
-                this.updateTextElement(key, state[key]);
+                this.updateTextElement(key, stats[key]);
             }
         });
     },
+
+    // Прочие элементы страницы и изменение их состояний
     showPopup: function(popup) {
         popup.classList.add('popup_visible');
     },
