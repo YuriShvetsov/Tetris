@@ -14,9 +14,9 @@
             <div class="app__game-field">
                 <canvas class="canvas canvas_game-field" id="game-field"></canvas>
                 <div class="grid grid_hidden"></div>
-                <div class="game-over-caption">
-                    <div class="game-over-caption__left">Game</div>
-                    <div class="game-over-caption__right"> over</div>
+                <div class="game-over-caption js-game-over">
+                    <div class="game-over-caption__left">Game </div>
+                    <div class="game-over-caption__right">over</div>
                 </div><!-- game-over-caption -->
                 <div class="info">
                     <button class="info__btn js-info-btn">Info</button>
@@ -24,20 +24,24 @@
                         <div class="info__title">Controls</div>
                         <table class="info__table table">
                             <tr class="table__row">
-                                <td class="table__cell table__cell_align_right"><span class="info__text">Rotate:</span></td>
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Rotate figure:</span></td>
                                 <td class="table__cell"><span class="info__text">Enter</span></td>
                             </tr>
                             <tr class="table__row">
-                                <td class="table__cell table__cell_align_right"><span class="info__text">Left:</span></td>
-                                <td class="table__cell"><span class="info__text">"A"</span></td>
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Move to left:</span></td>
+                                <td class="table__cell"><span class="info__text">Arrow left</span></td>
                             </tr>
                             <tr class="table__row">
-                                <td class="table__cell table__cell_align_right"><span class="info__text">Down:</span></td>
-                                <td class="table__cell"><span class="info__text">"S"</span></td>
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Move to down:</span></td>
+                                <td class="table__cell"><span class="info__text">Arrow down</span></td>
                             </tr>
                             <tr class="table__row">
-                                <td class="table__cell table__cell_align_right"><span class="info__text">Right:</span></td>
-                                <td class="table__cell"><span class="info__text">"D"</span></td>
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Move to right:</span></td>
+                                <td class="table__cell"><span class="info__text">Arrow right</span></td>
+                            </tr>
+                            <tr class="table__row">
+                                <td class="table__cell table__cell_align_right"><span class="info__text">Stop game:</span></td>
+                                <td class="table__cell"><span class="info__text">Escape</span></td>
                             </tr>
                         </table>
                     </div>
@@ -103,7 +107,7 @@
                     </table><!-- info__tb -->
                 </div><!-- side__game-state -->
                 <div class="side__controls">
-                    <button class="controls-btn controls-btn_green js-start" data-prop="startGame">Start</button>
+                    <button class="controls-btn controls-btn_green js-start" data-prop="toggleGame">Start</button>
                     <button class="controls-btn controls-btn_red js-reset" data-prop="resetGame">Reset game</button>
                 </div><!-- side-controls -->
             </div><!-- app__side -->

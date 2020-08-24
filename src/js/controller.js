@@ -1,16 +1,17 @@
 const controller = {
-    // Общее состояние игры (активные попапы и прочее)
     state: {
         popup: {
             isActive: false,
             element: null
         },
-        gameIsStarted: false
+        game: {
+            isLaunched: false
+        }
     },
     frame: null,
+    pressed: false,
 
-    /* Инициализация объектов (элемента app, модели и представления),
-    а также инициализация обработчиков */
+    // The init
     init: function(app, model, view) {
         this.app = app;
         this.model = model;
@@ -25,8 +26,13 @@ const controller = {
         document.addEventListener('keydown', event => {
             this.keydownHandler.call(this, event);
         });
+        document.addEventListener('keyup', event => {
+            this.keyupHandler.call(this, event);
+        });
     },
     clickHandler: function(event) {
+        event.target.blur();
+
         let prop = event.target.dataset.prop;
 
         if (this.state.popup.isActive && !this.state.popup.element.contains(event.target)) {
@@ -43,80 +49,136 @@ const controller = {
         action();
     },
     keydownHandler: function(event) {
+        if (this.state.game.isLaunched) {
+            switch (event.keyCode) {
+                case 37: // Arrow left
+                    this.model.moveCurFigure('left');
+                    break;
+                case 39: // Arrow right
+                    this.model.moveCurFigure('right');
+                    break;
+                case 40: // Arrow down
+                    this.model.moveCurFigure('down');
+                    break;
+                case 13: // Enter
+                    if (this.pressed) break;
+
+                    this.pressed = true;
+                    this.model.rotateCurFigure();
+                    break;
+            }
+        }
+
         switch (event.keyCode) {
-            case 37:
-                this.model.moveCurFigure('left');
-                // console.log('arrow left');
+            case 27: // Escape
+                if (this.state.game.isLaunched) {
+                    this.stopGame();
+                } else if (this.state.popup.isActive) {
+                    this.closePopup();
+                }
                 break;
-            case 39:
-                this.model.moveCurFigure('right');
-                // console.log('array right');
-                break;
-            case 40:
-                this.model.moveCurFigure('down');
-                // console.log('array down');
-                break;
-            case 13:
-                this.model.rotateCurFigure();
-                // console.log('enter');
+        }
+    },
+    keyupHandler: function(event) {
+        if (!this.state.game.isLaunched) return;
+
+        switch (event.keyCode) {
+            case 13: // Enter
+                this.pressed = false;
                 break;
         }
     },
 
-    // Действия пользователя
+    // Main actions
+    toggleGame: function() {
+        this.state.game.isLaunched ? this.stopGame() : this.startGame();
+    },
     startGame: function() {
-        this.state.gameIsStarted = !this.state.gameIsStarted;
-
-        if (!this.state.gameIsStarted) {
-            this.stopGame();
-            return;
-        }
-            
+        this.state.game.isLaunched = true;
         this.model.start();
+        this.view.setCaptionForStartBtn(this.state.game.isLaunched);
+
         update.call(this);
 
-        // обновление данных и перерисовка кадров
         function update() {
-            let curFigure = this.model.getCurFigure();
-            let world = this.model.getWorld();
-            this.view.renderGameField(curFigure, world);
+            let gameStatus = this.model.getGameStatus();
 
-            let nextFigure = this.model.getNextFigure();
-            this.view.renderNextFigure(nextFigure);
-            this.frame = requestAnimationFrame(update.bind(this));
+            switch (gameStatus) {
+                case 'launched':
+                    this.render();
+                    this.frame = requestAnimationFrame(update.bind(this));
+                    break;
+                case 'finished':
+                    this.finishGame();
+                    break;
+            }
+        }
+    },
+    render: function() {
+        let curFigure = this.model.getCurFigure();
+        let world = this.model.getWorld();
+        this.view.clearGameFieldCanvas();
+        this.view.renderCurFigure(curFigure);
+        this.view.renderWorldMap(world);
+
+        let nextFigure = this.model.getNextFigure();
+        this.view.clearNextFigureCanvas();
+        this.view.renderNextFigure(nextFigure);
+
+        let stats = this.model.getStats();
+        this.view.updateStats(stats);
+    },
+    stopGame: function() {
+        this.state.game.isLaunched = false;
+        this.model.stop();
+        this.view.setCaptionForStartBtn(false);
+
+        cancelAnimationFrame(this.frame);
+    },
+    resetGame: function() {
+        this.stopGame();
+        this.model.reset();
+        this.view.clearGameFieldCanvas();
+        this.view.clearNextFigureCanvas();
+    },
+    finishGame: function() {
+        this.state.game.isLaunched = false;
+        this.model.stop();
+        this.view.setCaptionForStartBtn(false);
+        this.view.showReportGameOver();
+        this.view.hideGameField();
+
+        cancelAnimationFrame(this.frame);
+
+        setTimeout(() => {
+            this.model.reset();
 
             let stats = this.model.getStats();
             this.view.updateStats(stats);
-        }
-    },
-    stopGame: function() {
-        this.model.stop();
-        cancelAnimationFrame(this.frame);
-        this.state.gameIsStarted = false;
 
-        console.log('game is stopped');
+            this.view.clearGameFieldCanvas();
+            this.view.clearNextFigureCanvas();
+            this.view.hideReportGameOver();
+            this.view.showGameField();
+        }, 2500);
     },
-    resetGame: function() {
-        this.state.gameIsStarted = false;
-        this.model.reset();
-        cancelAnimationFrame(this.frame);
-        this.view.clearAll();
-    },
-    openPopup: function() {
-        let popup = arguments[0].parentElement.querySelector('.popup');
 
-        this.view.showPopup(popup);
-        this.view.showOverlay();
+    // Other actions
+    openPopup: function(popupBtn) {
+        if (this.state.game.isLaunched) this.stopGame();
+
+        let popup = popupBtn.parentElement.querySelector('.popup');
+
         this.state.popup.isActive = true;
         this.state.popup.element = popup;
-        
-        if (this.state.gameIsStarted) {
-            this.stopGame();
-        }
+
+        this.view.showPopup(this.state.popup.element);
+        this.view.showOverlay();
     },
     closePopup: function() {
         this.view.hidePopup(this.state.popup.element);
         this.view.hideOverlay();
+
         this.state.popup.isActive = false;
         this.state.popup.element = null;
     }

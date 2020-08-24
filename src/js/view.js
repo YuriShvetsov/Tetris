@@ -1,36 +1,41 @@
 const view = {
-    // Основные элементы страницы, а также параметры холстов
-    elements: {
-        gameField: {
-            canvas: app.querySelector('#game-field'),
-            context: null,
-            sizePx: {}
-        },
-        nextFigure: {
-            canvas: app.querySelector('#next-figure'),
-            context: null,
-            sizePx: {}
-        },
-        menuBtn: app.querySelector('.js-menu-btn'),
-        menuPopup: app.querySelector('.js-menu-popup'),
-        level: app.querySelector('.js-level'),
-        speed: app.querySelector('.js-speed'),
-        score: app.querySelector('.js-score'),
-        hiscore: app.querySelector('.js-hiscore'),
-        startBtn: app.querySelector('.js-start'),
-        resetBtn: app.querySelector('.js-reset'),
-        overlay: app.querySelector('.js-overlay')
-    },
     properties: {
         pixelDepth: 2,
         squareSize: 20,
         padding: 0
     },
+    elements: null,
 
-    // Инициализация параметров игры
+    /* The init & setting parameters */
+
     init: function(app) {
         this.app = app;
-        this.initCanvas();
+        this.elements = {
+            gameField: {
+                canvas: this.app.querySelector('#game-field'),
+                context: null,
+                sizePx: null
+            },
+            nextFigure: {
+                canvas: this.app.querySelector('#next-figure'),
+                context: null,
+                sizePx: null
+            },
+            menuBtn: this.app.querySelector('.js-menu-btn'),
+            menuPopup: this.app.querySelector('.js-menu-popup'),
+            startBtn: this.app.querySelector('.js-start'),
+            resetBtn: this.app.querySelector('.js-reset'),
+            overlay: this.app.querySelector('.js-overlay'),
+            gameOver: this.app.querySelector('.js-game-over'),
+            stats: {
+                level: this.app.querySelector('.js-level'),
+                speed: this.app.querySelector('.js-speed'),
+                score: this.app.querySelector('.js-score'),
+                hiscore: this.app.querySelector('.js-hiscore')
+            }
+        };
+
+        setTimeout(() => { this.initCanvas() });
     },
     initCanvas: function() {
         this.elements.gameField.context = this.elements.gameField.canvas.getContext('2d');
@@ -40,13 +45,13 @@ const view = {
         this.setCanvasSize(this.elements.nextFigure, this.elements.nextFigure.sizePx.width, this.elements.nextFigure.sizePx.height);
     },
     setProps: function(props) {
+        if (!props.hasOwnProperty('gameFieldSize') || !props.hasOwnProperty('nextFigureSize')) {
+            console.error('Data error! Properties is not found');
+            return;            
+        }
+
         let gameFieldSize = props['gameFieldSize'];
         let nextFigureSize = props['nextFigureSize'];
-
-        if (gameFieldSize === undefined || nextFigureSize === undefined) {
-            console.error('Data error! Properties is not found.');
-            return;
-        }
 
         this.elements.gameField.sizePx = {
             width: gameFieldSize.width * this.properties.pixelDepth * this.properties.squareSize,
@@ -66,7 +71,8 @@ const view = {
         element.context.scale(this.properties.pixelDepth, this.properties.pixelDepth);
     },
 
-    // Отрисовка на холстах
+    /* Rendering */
+
     renderSquare: function(context, x, y, color) {
         let coordX = x * this.properties.squareSize;
         let coordY = y * this.properties.squareSize;
@@ -84,21 +90,14 @@ const view = {
     },
     renderWorldMap: function(world) {
         for (let y in world.map) {
-            let row = world.map[y];
-
-            for (let x in row) {
-                let cell = row[x];
+            for (let x in world.map[y]) {
+                let cell = world.map[y][x];
 
                 if (cell === true) {
                     this.renderSquare(this.elements.gameField.context, x, y, world.color);
                 }
             }
         }
-    },
-    renderGameField: function(curFigure, worldMap) {
-        this.clearCanvas(this.elements.gameField);
-        this.renderCurFigure(curFigure);
-        this.renderWorldMap(worldMap);
     },
     renderNextFigure: function(nextFigure) {
         nextFigure.figure.coords.forEach(square => {
@@ -111,32 +110,34 @@ const view = {
     clearCanvas: function(canvas) {
         canvas.context.clearRect(0, 0, canvas.sizePx.width - 1, canvas.sizePx.height - 1);
     },
-    clearAll: function() {
+    clearGameFieldCanvas: function() {
         this.clearCanvas(this.elements.gameField);
+    },
+    clearNextFigureCanvas: function() {
         this.clearCanvas(this.elements.nextFigure);
     },
 
-    // Обновление текстовых элементов
+    /* Updating visual states of app elements */
+
     updateTextElement: function(element, text) {
-        if (!this.elements[element]) return;
+        if (!this.elements.hasOwnProperty(element)) return;
 
         this.elements[element].innerHTML = text;
     },
     updateStats: function(stats) {
         Object.keys(stats).forEach(key => {
-            if (this.elements[key]) {
-                this.updateTextElement(key, stats[key]);
+            if (this.elements.stats.hasOwnProperty(key)) {
+                this.elements.stats[key].innerHTML = stats[key];
             }
         });
     },
-
-    // Прочие элементы страницы и изменение их состояний
     showPopup: function(popup) {
         popup.classList.add('popup_visible');
     },
     hidePopup: function(popup) {
         popup.classList.add('popup_hidden');
         popup.classList.remove('popup_visible');
+
         setTimeout(() => {
             popup.classList.remove('popup_hidden');
         }, 200);
@@ -147,6 +148,25 @@ const view = {
     hideOverlay: function() {
         this.elements.overlay.classList.remove('overlay_visible');
     },
+    setCaptionForStartBtn: function(gameIsStarted) {
+        if (gameIsStarted) {
+            this.elements.startBtn.innerHTML = 'pause';
+        } else {
+            this.elements.startBtn.innerHTML = 'start';
+        }
+    },
+    showReportGameOver: function() {
+        this.elements.gameOver.classList.add('game-over-caption_visible');
+    },
+    hideReportGameOver: function() {
+        this.elements.gameOver.classList.remove('game-over-caption_visible');
+    },
+    showGameField: function() {
+        this.elements.gameField.canvas.classList.remove('canvas_game-field_hidden');
+    },
+    hideGameField: function() {
+        this.elements.gameField.canvas.classList.add('canvas_game-field_hidden');
+    }
 };
 
 export default view;

@@ -109,7 +109,11 @@ input[type=checkbox] {
 .canvas_game-field {
     display: block;
     position: relative;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 150ms ease-in-out;
+}
+
+.canvas_game-field_hidden {
+    opacity: 0;
 }
 
 .info {
@@ -147,7 +151,12 @@ input[type=checkbox] {
     opacity: 1;
 }
 
+.info {
+    width: 100%;
+}
+
 .info__popup {
+    width: calc(100% - 30px);
     padding: 10px 15px;
     position: absolute;
     left: 13px;
@@ -186,7 +195,40 @@ input[type=checkbox] {
 }
 
 .game-over-caption {
-    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 30%;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #ce2a01;
+    visibility: hidden;
+}
+
+.game-over-caption_visible {
+    visibility: visible;
+}
+
+.game-over-caption__left {
+    display: inline-block;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+}
+
+.game-over-caption__right {
+    display: inline-block;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+}
+
+.game-over-caption_visible .game-over-caption__right,
+.game-over-caption_visible .game-over-caption__left {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Right part */
@@ -194,8 +236,9 @@ input[type=checkbox] {
 .side {
     display: flex;
     flex-direction: column;
-    width: 210px;
+    width: 212px;
     padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .side__header {
