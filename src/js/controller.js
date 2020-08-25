@@ -121,12 +121,16 @@ const controller = {
         this.view.renderCurFigure(curFigure);
         this.view.renderWorldMap(world);
 
-        let nextFigure = this.model.getNextFigure();
-        this.view.clearNextFigureCanvas();
-        this.view.renderNextFigure(nextFigure);
+        if (this.model.nextFigureIsUpdated()) {
+            let nextFigure = this.model.getNextFigure();
+            this.view.clearNextFigureCanvas();
+            this.view.renderNextFigure(nextFigure);
+        }
 
-        let stats = this.model.getStats();
-        this.view.updateStats(stats);
+        if (this.model.statsIsChanged()) {
+            let stats = this.model.getStats();
+            this.view.updateStats(stats);
+        }
     },
     stopGame: function() {
         this.state.game.isLaunched = false;

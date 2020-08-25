@@ -75,7 +75,9 @@ const model = {
             counter: 0
         },
         game: {
-            status: 'new' // is_launched, is_over, is_paused
+            status: 'new', // is_launched, is_over, is_pausedб
+            statsIsChanged: false,
+            nextFigureIsUpdated: false
         }
     },
 
@@ -139,8 +141,13 @@ const model = {
         this.state.stats.level = 1;
         this.state.stats.speed = 1;
         this.state.stats.score = 0;
+        this.state.game.statsIsChanged = true;
+    },
+    statsIsChanged: function() {
+        return this.state.game.statsIsChanged;
     },
     getStats: function() {
+        this.state.game.statsIsChanged = false;
         return this.state.stats;
     },
     getGameStatus: function() {
@@ -150,6 +157,8 @@ const model = {
         return this.properties;
     },
     increaceScore: function(value) {
+        if (value === 0) return;
+
         let maxSpeed = this.properties.mode[this.state.app.mode].maxSpeed;
         let stepSpeed = this.properties.mode[this.state.app.mode].stepSpeed;
 
@@ -173,6 +182,8 @@ const model = {
                 this.writeStateToLS();
             }
         }
+
+        this.state.game.statsIsChanged = true;
     },
     setCurFigure: function() {
         // 1. Скопировать фигуру из nextFigure
@@ -196,7 +207,11 @@ const model = {
     getCurFigure: function() {
         return this.curFigure;
     },
+    nextFigureIsUpdated: function() {
+        return this.state.game.nextFigureIsUpdated;
+    },
     setNextFigure: function() {
+        // 1. Выбрать случайную фигуру из списка и цвет
         let randomFigure = Object.assign({}, this.getRandomItem(this.figures));
         let randomColor = this.getRandomItem(this.colors);
 
@@ -205,8 +220,12 @@ const model = {
             centerCoords: { x: 1, y: 2 },
             color: randomColor
         };
+
+        // 2. Сообщить об изменении следующей фигуры
+        this.state.game.nextFigureIsUpdated = true;
     },
     getNextFigure: function() {
+        this.state.game.nextFigureIsUpdated = false;
         return this.nextFigure;
     },
     getWorld: function() {
