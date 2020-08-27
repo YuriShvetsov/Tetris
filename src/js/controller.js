@@ -94,6 +94,8 @@ const controller = {
         this.state.game.isLaunched ? this.stopGame() : this.startGame();
     },
     startGame: function() {
+        if (this.model.getGameStatus() == 'finished') return;
+
         this.state.game.isLaunched = true;
         this.model.start();
         this.view.setCaptionForStartBtn(this.state.game.isLaunched);
@@ -115,11 +117,13 @@ const controller = {
         }
     },
     render: function() {
-        let curFigure = this.model.getCurFigure();
-        let world = this.model.getWorld();
-        this.view.clearGameFieldCanvas();
-        this.view.renderCurFigure(curFigure);
-        this.view.renderWorldMap(world);
+        if (this.model.gameWorldIsChanged()) {
+            let curFigure = this.model.getCurFigure();
+            let world = this.model.getWorld();
+            this.view.clearGameFieldCanvas();
+            this.view.renderCurFigure(curFigure);
+            this.view.renderWorldMap(world);
+        }
 
         if (this.model.nextFigureIsUpdated()) {
             let nextFigure = this.model.getNextFigure();
@@ -140,6 +144,8 @@ const controller = {
         cancelAnimationFrame(this.frame);
     },
     resetGame: function() {
+        if (this.model.getGameStatus() == 'finished') return;
+
         this.stopGame();
         this.model.reset();
         this.view.clearGameFieldCanvas();
@@ -147,7 +153,6 @@ const controller = {
     },
     finishGame: function() {
         this.state.game.isLaunched = false;
-        this.model.stop();
         this.view.setCaptionForStartBtn(false);
         this.view.showReportGameOver();
         this.view.hideGameField();
@@ -164,7 +169,7 @@ const controller = {
             this.view.clearNextFigureCanvas();
             this.view.hideReportGameOver();
             this.view.showGameField();
-        }, 2500);
+        }, 3000);
     },
 
     // Other actions

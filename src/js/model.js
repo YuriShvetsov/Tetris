@@ -77,7 +77,8 @@ const model = {
         game: {
             status: 'new', // is_launched, is_over, is_pausedб
             statsIsChanged: false,
-            nextFigureIsUpdated: false
+            nextFigureIsUpdated: false,
+            gameWorldIsChanged: false
         }
     },
 
@@ -196,15 +197,19 @@ const model = {
         
         // 2. Задать ей координаты центра
         let centerX = Math.ceil(this.world.rightBorder / 2);
-        let centerY = -this.getMaxOfArray(this.curFigure.figure.coords.map(coord => coord[1])) - 2;
+        let centerY = -this.getMaxOfArray(this.curFigure.figure.coords.map(coord => coord[1])) - 1;
+        let newCenterCoords = {
+            x: centerX,
+            y: centerY
+        };
 
-        this.curFigure.centerCoords.x = centerX;
-        this.curFigure.centerCoords.y = centerY;
+        this.setCenterCoords(newCenterCoords);
     },
     setCenterCoords: function(centerCoords) {
         this.curFigure.centerCoords = centerCoords;
     },
     getCurFigure: function() {
+        this.state.game.gameWorldIsChanged = false;
         return this.curFigure;
     },
     nextFigureIsUpdated: function() {
@@ -229,7 +234,11 @@ const model = {
         return this.nextFigure;
     },
     getWorld: function() {
+        this.state.game.gameWorldIsChanged = false;
         return this.world;
+    },
+    gameWorldIsChanged: function() {
+        return this.state.game.gameWorldIsChanged;
     },
     fillWorldMap: function() {
         // 1. Получить координаты текущей фигуры относительно поля
@@ -270,6 +279,9 @@ const model = {
         // 6. Сгенерировать новые фигуры
         this.setCurFigure();
         this.setNextFigure();
+
+        // 7. Сообщить об изменении игровго мира
+        this.state.game.gameWorldIsChanged = true;
     },
     getFullCoordsOfCurFig: function() {
         let fullCoords = [];
@@ -388,6 +400,9 @@ const model = {
         }
 
         this.setCenterCoords(newCenterCoords);
+
+        // 6. Сообщить об изменении игрового мира
+        this.state.game.gameWorldIsChanged = true;
     },
     dropCurFigure: function() {
         if (this.state.game.status != 'launched') return;
@@ -469,6 +484,9 @@ const model = {
         if (this.curFigure.figure.positions == 2) {
             this.curFigure.clockwise = !this.curFigure.clockwise;
         }
+
+        // 7. Сообщить об изменении игровго мира
+        this.state.game.gameWorldIsChanged = true;
     },
 
     // Основные действия
