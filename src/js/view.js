@@ -44,6 +44,15 @@ const view = {
         this.setCanvasSize(this.elements.gameField, this.elements.gameField.sizePx.width, this.elements.gameField.sizePx.height);
         this.setCanvasSize(this.elements.nextFigure, this.elements.nextFigure.sizePx.width, this.elements.nextFigure.sizePx.height);
     },
+    initAppSettings: function(settings) {
+        Object.keys(settings).forEach(key => {
+            if (this.hasOwnProperty(key)) {
+                let object = this[key];
+                let state = settings[key];
+                object.init(state);
+            }
+        });
+    },
     setProps: function(props) {
         if (!props.hasOwnProperty('gameFieldSize') || !props.hasOwnProperty('nextFigureSize')) {
             console.error('Data error! Properties is not found');
@@ -166,6 +175,45 @@ const view = {
     },
     hideGameField: function() {
         this.elements.gameField.canvas.classList.add('canvas_game-field_hidden');
+    },
+
+    grid: {
+        init: function(state) {
+            this.element = view.app.querySelector('.js-grid');
+            this.checkbox = view.app.querySelector('.js-grid-checkbox');
+            this.checkbox.checked = state.isActive;
+
+            if (state.isActive) {
+                this.show();
+            } else {
+                this.hide();
+            }
+        },
+        show: function() {
+            this.element.classList.add('grid_visible');
+        },
+        hide: function() {
+            this.element.classList.remove('grid_visible');
+        }
+    },
+    darkTheme: {
+        init: function(state) {
+            this.element = view.app;
+            this.checkbox = view.app.querySelector('.js-dark-theme-checkbox');
+            this.checkbox.checked = state.isActive;
+
+            if (state.isActive) {
+                this.activate();
+            } else {
+                this.unActivate();
+            }
+        },
+        activate: function() {
+            this.element.classList.add('app_theme_dark');
+        },
+        unActivate: function() {
+            this.element.classList.remove('app_theme_dark');
+        }
     }
 };
 

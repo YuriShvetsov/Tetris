@@ -6,7 +6,9 @@ const controller = {
         },
         game: {
             isLaunched: false
-        }
+        },
+        // grid: false,
+        // darkTheme: false
     },
     frame: null,
     pressed: false,
@@ -18,6 +20,7 @@ const controller = {
         this.view = view;
 
         this.initHandlers();
+        this.initUI();
     },
     initHandlers: function() {
         this.app.addEventListener('click', event => {
@@ -29,6 +32,10 @@ const controller = {
         document.addEventListener('keyup', event => {
             this.keyupHandler.call(this, event);
         });
+    },
+    initUI: function() {
+        let appSettings = this.model.getAppSettings();
+        this.view.initAppSettings(appSettings);
     },
     clickHandler: function(event) {
         event.target.blur();
@@ -157,6 +164,8 @@ const controller = {
         this.view.showReportGameOver();
         this.view.hideGameField();
 
+        if (this.model.getAppSettings().grid.isActive) this.view.grid.hide();
+
         cancelAnimationFrame(this.frame);
 
         setTimeout(() => {
@@ -164,11 +173,12 @@ const controller = {
 
             let stats = this.model.getStats();
             this.view.updateStats(stats);
-
             this.view.clearGameFieldCanvas();
             this.view.clearNextFigureCanvas();
             this.view.hideReportGameOver();
             this.view.showGameField();
+
+            if (this.model.getAppSettings().grid.isActive) this.view.grid.show();
         }, 3000);
     },
 
@@ -182,14 +192,39 @@ const controller = {
         this.state.popup.element = popup;
 
         this.view.showPopup(this.state.popup.element);
-        this.view.showOverlay();
     },
     closePopup: function() {
         this.view.hidePopup(this.state.popup.element);
-        this.view.hideOverlay();
 
         this.state.popup.isActive = false;
         this.state.popup.element = null;
+    },
+    toggleDarkTheme: function(checkbox) {
+        this.model.setDarkTheme(checkbox.checked);
+
+        if (checkbox.checked) {
+            this.view.darkTheme.activate();
+        } else {
+            this.view.darkTheme.unActivate();
+        }
+
+        if (this.model.getGameStatus == 'paused') {
+            let curFigure = this.model.getCurFigure();
+            let world = this.model.getWorld();
+
+            this.view.clearGameFieldCanvas();
+            this.view.renderCurFigure(curFigure);
+            this.view.renderWorldMap(world);
+        }
+    },
+    toggleGrid: function(checkbox) {
+        this.model.setGrid(checkbox.checked);
+
+        if (checkbox.checked) {
+            this.view.grid.show();
+        } else {
+            this.view.grid.hide();
+        }
     }
 };
 

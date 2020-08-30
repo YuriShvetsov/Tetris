@@ -9,10 +9,10 @@
 </head>
 <body>
 
-    <div id="app" class="app app_theme_light">
+    <div id="app" class="app">
         <div class="app__container">
             <div class="app__game-field">
-                <div class="grid"></div>
+                <div class="grid js-grid"></div>
                 <canvas class="canvas canvas_game-field" id="game-field"></canvas>
                 <div class="game-over-caption js-game-over">
                     <div class="game-over-caption__left">Game </div>
@@ -55,13 +55,13 @@
                         <div class="menu__popup popup">
                             <div class="menu__title">Settings</div>
                             <div class="menu__row">
-                                <input class="menu__checkbox" type="checkbox" value="theme" id="checkbox-dark-theme">
+                                <input class="menu__checkbox js-dark-theme-checkbox" type="checkbox" value="theme" id="checkbox-dark-theme" data-prop="toggleDarkTheme">
                                 <label for="checkbox-dark-theme" class="menu__label">
                                     <span class="menu__text app__text">Dark theme</span>
                                 </label>
                             </div>
                             <div class="menu__row">
-                                <input class="menu__checkbox" type="checkbox" value="grid" id="checkbox-grid">
+                                <input class="menu__checkbox js-grid-checkbox" type="checkbox" value="grid" id="checkbox-grid" data-prop="toggleGrid">
                                 <label for="checkbox-grid" class="menu__label">
                                     <span class="menu__text app__text">Grid</span>
                                 </label>

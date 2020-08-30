@@ -12,32 +12,39 @@ const model = {
 
     },
     figures: [
-        { // []
+        {
             coords: [ [0, -1], [0, 0], [1, -1], [1, 0] ],
+            name: '[]',
             positions: 1
         },
-        { // |
+        {
             coords: [ [0, -2], [0, -1], [0, 0], [0, 1] ],
+            name: '|',
             positions: 2
         },
-        { // L
+        {
             coords: [ [0, -1], [0, 0], [0, 1], [1, 1] ],
+            name: 'L',
             positions: 4
         },
-        { // J
+        {
             coords: [ [0, -1], [0, 0], [0, 1], [-1, 1] ],
+            name: 'J',
             positions: 4
         },
-        { // S
+        {
             coords: [ [-1, 0], [0, -1], [0, 0], [1, -1] ],
+            name: 'S',
             positions: 2
         },
-        { // T
+        {
             coords: [ [-1, 0], [0, 0], [1, 0], [0, -1] ],
+            name: 'T',
             positions: 4
         },
-        { // Z
+        {
             coords: [ [-1, -1], [0, -1], [0, 0], [1, 0] ],
+            name: 'Z',
             positions: 2
         }
     ],
@@ -63,9 +70,13 @@ const model = {
 
     state: {
         app: {
-            grid: false,
-            mode: 'default',
-            theme: 'default'
+            darkTheme: {
+                isActive: false
+            },
+            grid: {
+                isActive: false
+            },
+            mode: 'default'
         },
         stats: {
             level: 0,
@@ -84,32 +95,35 @@ const model = {
 
     // The init
     init: function() {
-        this.setWorldSizes();
-        this.setEmptyWorldMap();
         this.initState();
+        this.setWorldProps();
+        this.setEmptyWorldMap();
+        // this.initState();
     },
     initState: function() {
         // localStorage.setItem('tetris', JSON.stringify(null)); // Remove!
 
         let data = this.readStateFromLS() || {
-            theme: this.state.app.theme,
+            darkTheme: this.state.app.darkTheme,
             grid: this.state.app.grid,
             hiscore: this.state.stats.hiscore
         };
 
-        this.state.app.theme = data.theme;
+        this.state.app.darkTheme = data.darkTheme;
         this.state.app.grid = data.grid;
         this.state.stats.hiscore = data.hiscore;
 
         this.writeStateToLS(data);
     },
-    setWorldSizes: function() {
+    setWorldProps: function() {
         this.world.leftBorder = 0;
         this.world.rightBorder = this.properties.gameFieldSize.width - 1;
         this.world.topBorder = 0;
         this.world.bottomBorder = this.properties.gameFieldSize.height - 1;
         this.world.width = this.properties.gameFieldSize.width;
         this.world.height = this.properties.gameFieldSize.height;
+
+        if (this.state.app.darkTheme.isActive) this.world.color = '#ffffff';
     },
     setEmptyWorldMap: function() {
         let row = [];
@@ -130,7 +144,8 @@ const model = {
     },
     writeStateToLS: function() {
         let newData = {
-            theme: this.state.app.theme,
+            darkTheme: this.state.app.darkTheme,
+            grid: this.state.app.grid,
             hiscore: this.state.stats.hiscore
         };
 
@@ -150,6 +165,23 @@ const model = {
     getStats: function() {
         this.state.game.statsIsChanged = false;
         return this.state.stats;
+    },
+    getAppSettings: function() {
+        return this.state.app;
+    },
+    setDarkTheme: function(bool) {
+        if (bool) {
+            this.world.color = '#ffffff';
+        } else {
+            this.world.color = '#aaaaaa';
+        }
+
+        this.state.app.darkTheme.isActive = bool;
+        this.writeStateToLS();
+    },
+    setGrid: function(bool) {
+        this.state.app.grid.isActive = bool;
+        this.writeStateToLS();
     },
     getGameStatus: function() {
         return this.state.game.status;
@@ -216,17 +248,24 @@ const model = {
         return this.state.game.nextFigureIsUpdated;
     },
     setNextFigure: function() {
-        // 1. Выбрать случайную фигуру из списка и цвет
+        // 1. Выбрать отличную от текущей фигуру
         let randomFigure = Object.assign({}, this.getRandomItem(this.figures));
+
+        if (this.curFigure && randomFigure.name === this.curFigure.figure.name) {
+            return this.setNextFigure();
+        }
+
+        // 2. Выбрать цвет
         let randomColor = this.getRandomItem(this.colors);
 
+        // 3. Присвоить выбранную фигуру и цвет в качестве следующей ф.
         this.nextFigure =  {
             figure: randomFigure,
             centerCoords: { x: 1, y: 2 },
             color: randomColor
         };
 
-        // 2. Сообщить об изменении следующей фигуры
+        // 4. Сообщить об изменении следующей фигуры
         this.state.game.nextFigureIsUpdated = true;
     },
     getNextFigure: function() {
