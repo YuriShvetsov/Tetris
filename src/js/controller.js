@@ -1,14 +1,16 @@
 const controller = {
     state: {
+        modal: {
+            isActive: false,
+            element: null
+        },
         popup: {
             isActive: false,
             element: null
         },
         game: {
             isLaunched: false
-        },
-        // grid: false,
-        // darkTheme: false
+        }
     },
     frame: null,
     pressed: false,
@@ -144,17 +146,55 @@ const controller = {
         }
     },
     stopGame: function() {
+        if (!this.state.game.isLaunched) return;
+
         this.state.game.isLaunched = false;
         this.model.stop();
         this.view.setCaptionForStartBtn(false);
 
         cancelAnimationFrame(this.frame);
     },
-    resetGame: function() {
-        if (this.model.getGameStatus() == 'finished') return;
+    showModalResetGame: function(button) {
+        // if (this.model.getGameStatus() == 'finished') return;
 
-        this.stopGame();
+        // this.stopGame();
+        // this.model.reset();
+        // this.view.clearGameFieldCanvas();
+        // this.view.clearNextFigureCanvas();
+
+        let gameStatus = this.model.getGameStatus();
+
+        if (gameStatus != 'launched' && gameStatus != 'paused') return;
+
+        if (gameStatus === 'launched') {
+            this.stopGame();
+        }
+
+        let modalId = button.dataset.modalid;
+        let modal = this.app.querySelector('#' + modalId);
+
+        this.state.modal.isActive = true;
+        this.state.modal.element = modal;
+
+        this.view.showOverlay();
+        this.view.showModal(modal, () => {
+            modal.addEventListener('click', event => {
+                let actionName = event.target.dataset.prop;
+
+                if (actionName === undefined) return;
+                if (!this.hasOwnProperty(actionName)) return;
+
+                let action = this[actionName];
+
+                action.call(this);
+
+                this.closeModal();
+            });
+        });
+    },
+    resetGame: function() {
         this.model.reset();
+        this.view.updateStats(this.model.getStats());
         this.view.clearGameFieldCanvas();
         this.view.clearNextFigureCanvas();
     },
@@ -208,7 +248,7 @@ const controller = {
             this.view.darkTheme.unActivate();
         }
 
-        if (this.model.getGameStatus == 'paused') {
+        if (this.model.getGameStatus() == 'paused') {
             let curFigure = this.model.getCurFigure();
             let world = this.model.getWorld();
 
@@ -225,6 +265,13 @@ const controller = {
         } else {
             this.view.grid.hide();
         }
+    },
+    closeModal: function() {
+        this.view.hideOverlay();
+        this.view.hideModal(this.state.modal.element);
+
+        this.state.isActive = false;
+        this.state.element = null;
     }
 };
 

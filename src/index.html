@@ -108,11 +108,21 @@
                 </div><!-- side__game-state -->
                 <div class="side__controls">
                     <button class="controls-btn controls-btn_green js-start" data-prop="toggleGame">Start</button>
-                    <button class="controls-btn controls-btn_red js-reset" data-prop="resetGame">Reset game</button>
+                    <button class="controls-btn controls-btn_red js-reset" data-prop="showModalResetGame" data-modalid="modal-reset">Reset game</button>
                 </div><!-- side-controls -->
             </div><!-- app__side -->
-            <div class="overlay js-overlay" data-prop="close"></div>
         </div><!-- app__container -->
+        <div class="overlay js-overlay" data-prop="closeModal"></div>
+        <div class="modal modal_type_confirm" id="modal-reset">
+            <div class="modal__head">
+                <div class="modal__title modal__title_color_red">Resetting</div>
+                <div class="modal__text">Are you sure?</div>
+            </div>
+            <div class="modal__btn-container">
+                <button class="modal__btn modal__btn_type_accept" data-prop="resetGame">Ok</button>
+                <button class="modal__btn modal__btn_type_cancel" data-prop="closeModal">Cancel</button>
+            </div>
+        </div>
     </div><!-- app -->    
 
 </body>

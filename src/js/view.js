@@ -214,6 +214,18 @@ const view = {
         unActivate: function() {
             this.element.classList.remove('app_theme_dark');
         }
+    },
+    showModal: function(modal, callback) {    
+        modal.classList.add('modal_visible');
+        callback();
+    },
+    hideModal: function(modal) {
+        modal.classList.add('modal_hidden');
+
+        setTimeout(() => {
+            modal.classList.remove('modal_visible');
+            modal.classList.remove('modal_hidden');
+        }, 200);
     }
 };
 

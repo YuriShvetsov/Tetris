@@ -36,7 +36,6 @@ input[type=checkbox] {
     background: url(../images/background-day.png) no-repeat, linear-gradient(45deg, #ff5125, #0059fb);
     background-position: center, center;
     background-size: cover, cover;
-    transition: background 500ms ease;
 }
 
 .app_theme_dark {
@@ -113,15 +112,147 @@ input[type=checkbox] {
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
-    transition: opacity 100ms ease-in-out;
+    transition: opacity 150ms ease-in-out;
     pointer-events: none;
     z-index: 200;
 }
 
 .overlay_visible {
     opacity: 1;
+    pointer-events: unset;
+}
+
+.modal {
+    // display: none;
+    position: absolute;
+    left: 50%;
+    top: 120px;
+    transform: translate(-50%, 0);
+    border-radius: 3px;
+    box-shadow: 0 3px 15px -2px rgba(0,0,0,0.3);
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 300;
+}
+
+.modal_visible {
+    animation: modal_show 150ms ease-in-out;
+    animation-fill-mode: both;
+    visibility: visible;
+}
+
+.modal_hidden {
+    animation: modal_hide 150ms ease-in-out;
+    animation-fill-mode: both;
+    visibility: visible;
+}
+
+.app_theme_dark .modal {
+    background-color: #242424;
+    border: 1px solid #353535;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+.modal_type_confirm {
+    min-width: 360px;
+}
+
+.modal__head {
+    padding: 30px;
+    background-color: #fff;
+}
+
+.app_theme_dark .modal__head {
+    background: #242424;
+}
+
+.modal__title {
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.modal__title_color_red {
+    color: #ff5125;
+}
+
+.modal__text {
+    font-size: 24px;
+    text-align: center;
+}
+
+.modal__btn-container {
+    width: 100%;
+    padding: 0 30px 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    background-color: #fff;
+}
+
+
+.app_theme_dark .modal__btn-container {
+    background: #242424;
+}
+
+.modal__btn {
+    width: 100%;
+    font-size: 22px;
+    text-transform: uppercase;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    outline: none;
+    transition: background-color 150ms ease-in-out;
+}
+
+.app_theme_dark .modal__btn {
+    color: #fff;
+    background-color: #242424;
+}
+
+.modal__btn:not(:last-child) {
+    margin-right: 10px;
+}
+
+.modal__btn:hover {
+    background-color: #fcfcfc;
+}
+
+.app_theme_dark .modal__btn:hover {
+    background-color: #202020;
+}
+
+.modal__btn_type_accept {
+    color: #fff;
+    background-color: #ff5125;
+    border: 1px solid #e73103;
+}
+
+.app_theme_dark .modal__btn_type_accept {
+    color: #fff;
+    background-color: #ff5125;
+    border: 1px solid #e73103;
+}
+
+.modal__btn_type_accept:hover {
+    background-color: #fc481b;
+}
+
+.app_theme_dark .modal__btn_type_accept:hover {
+    background-color: #fc481b;
+}
+
+.modal__btn_type_cancel {
+    color: #ff5125;
+    border: 1px solid #e73103;
+}
+
+.app_theme_dark .modal__btn_type_cancel {
+    color: #ff5125;
 }
 
 /* Left part */

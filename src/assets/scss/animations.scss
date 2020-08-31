@@ -1,45 +1,5 @@
 /* Animations */
 
-@keyframes game-over-opacity {
-
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-
-}
-
-@keyframes game-over-translate {
-
-    0% {
-        margin-right: 400%;
-    }
-
-    100% {
-        margin-right: 0;
-    }
-
-}
-
-@keyframes game-over-hide {
-
-    0% {
-        opacity: 1;
-    }
-
-    95% {
-        opacity: 0;
-    }
-
-    100% {
-        visibility: hidden;
-    }
-
-}
-
 @keyframes popup_show {
 
     0% {
@@ -76,33 +36,33 @@
 
 }
 
-@keyframes overlay_show {
+@keyframes modal_show {
 
     0% {
-        transform: translateY(0px) scale(1);
-        opacity: 1;
+        visibility: visible;
     }
 
-    95% {
-        transform: translateY(-20px) scale(0.95);
+    5% {
+        transform: translate(-50%, 0) scale(0.95);
         opacity: 0;
     }
 
     100% {
-        visibility: hidden;
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
     }
 
 }
 
-@keyframes overlay_hide {
+@keyframes modal_hide {
 
     0% {
-        transform: translateY(0px) scale(1);
+        transform: translate(-50%, 0) scale(1);
         opacity: 1;
     }
 
     95% {
-        transform: translateY(-20px) scale(0.95);
+        transform: translate(-50%, 0) scale(0.95);
         opacity: 0;
     }
 
