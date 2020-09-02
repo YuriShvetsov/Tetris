@@ -155,13 +155,6 @@ const controller = {
         cancelAnimationFrame(this.frame);
     },
     showModalResetGame: function(button) {
-        // if (this.model.getGameStatus() == 'finished') return;
-
-        // this.stopGame();
-        // this.model.reset();
-        // this.view.clearGameFieldCanvas();
-        // this.view.clearNextFigureCanvas();
-
         let gameStatus = this.model.getGameStatus();
 
         if (gameStatus != 'launched' && gameStatus != 'paused') return;

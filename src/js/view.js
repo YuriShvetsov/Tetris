@@ -1,3 +1,5 @@
+import graphics from './json/graphics.json';
+
 const view = {
     properties: {
         pixelDepth: 2,
@@ -36,6 +38,8 @@ const view = {
         };
 
         setTimeout(() => { this.initCanvas() });
+
+        this.preLoadGraphics();
     },
     initCanvas: function() {
         this.elements.gameField.context = this.elements.gameField.canvas.getContext('2d');
@@ -51,6 +55,14 @@ const view = {
                 let state = settings[key];
                 object.init(state);
             }
+        });
+    },
+    preLoadGraphics: function() {
+        Object.keys(graphics).forEach(key => {
+            graphics[key].forEach(url => {
+                let img = new Image();
+                img.src = url;
+            });
         });
     },
     setProps: function(props) {

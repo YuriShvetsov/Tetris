@@ -4,19 +4,19 @@ import controller from './controller';
 
 const app = document.getElementById('app');
 
-// Инициализация модели (данных)
+// Инициализация данных
 model.init();
 
-// Инициализация представления (ui)
+// Инициализация ui
 let props = model.getProps();
 view.init(app);
 view.setProps(props);
 
-// Вывод основных данных перед стартом игры
+// Вывод данных перед стартом игры
 let stats = model.getStats();
 view.updateStats(stats);
 
-// Инициализация контроллера
+// Инициализация управления
 document.addEventListener('DOMContentLoaded', event => {
     controller.init(app, model, view);
 });
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', event => {
 [✓] 2.1. Сетка
 [✓] 2.2. Темная тема
 [ ] 2.3. Сброс игры (появление модалки с подтверждением)
-[ ] 2.4. Предзагрузка изображений
+[✓] 2.4. Предзагрузка изображений
 [ ] 2.5. Протестировать, выявить возможные ошибки
 
 */

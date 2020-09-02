@@ -5,7 +5,7 @@ const model = {
         defaultSpeedMs: 1200,
         mode: {
             default: {
-                maxSpeed: 10,
+                maxSpeed: 11,
                 stepSpeed: 1
             }
         }
@@ -59,7 +59,7 @@ const model = {
         width: null,
         height: null,
         color: '#aaaaaa',
-        map: null // одномерный массив длиной width * height со значениями bool
+        map: null // двумерный массив длиной width * height со значениями boolean
     },
     colors: [
         '#ff5526', // orange
@@ -86,7 +86,7 @@ const model = {
             counter: 0
         },
         game: {
-            status: 'new', // is_launched, is_over, is_pausedб
+            status: 'new', // is_launched, is_over, is_paused
             statsIsChanged: false,
             nextFigureIsUpdated: false,
             gameWorldIsChanged: false
@@ -98,7 +98,7 @@ const model = {
         this.initState();
         this.setWorldProps();
         this.setEmptyWorldMap();
-        // this.initState();
+        this.initState();
     },
     initState: function() {
         // localStorage.setItem('tetris', JSON.stringify(null)); // Remove!
@@ -203,7 +203,7 @@ const model = {
                 this.state.stats.counter = 0;
                 this.state.stats.level++;
 
-                if (this.state.stats.speed > maxSpeed) {
+                if (this.state.stats.speed >= maxSpeed) {
                     this.state.stats.speed = 1;
                 } else {
                     this.state.stats.speed += stepSpeed;

@@ -85,7 +85,7 @@ input[type=checkbox] {
     visibility: hidden;
     opacity: 0;
     z-index: 300;
-    transition: background-color 150ms ease-in-out, border 150ms ease;
+    transition: background-color 150ms ease-in-out, border 150ms ease-in-out;
 }
 
 .popup_visible {
@@ -125,7 +125,6 @@ input[type=checkbox] {
 }
 
 .modal {
-    // display: none;
     position: absolute;
     left: 50%;
     top: 120px;
@@ -298,7 +297,7 @@ input[type=checkbox] {
     overflow: hidden;
     filter: saturate(2);
     cursor: pointer;
-    transition: all 100ms ease;
+    transition: all 150ms ease-in-out;
     outline: none;
     z-index: 300;
 }
