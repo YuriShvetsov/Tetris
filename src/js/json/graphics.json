@@ -1,7 +1,5 @@
 {
     "images": [
-        "../assets/images/background-day.png",
-        "../assets/images/background-night.png",
         "../assets/images/grid.png",
         "../assets/images/grid-white.png"
     ],

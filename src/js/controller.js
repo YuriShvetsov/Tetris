@@ -163,27 +163,7 @@ const controller = {
             this.stopGame();
         }
 
-        let modalId = button.dataset.modalid;
-        let modal = this.app.querySelector('#' + modalId);
-
-        this.state.modal.isActive = true;
-        this.state.modal.element = modal;
-
-        this.view.showOverlay();
-        this.view.showModal(modal, () => {
-            modal.addEventListener('click', event => {
-                let actionName = event.target.dataset.prop;
-
-                if (actionName === undefined) return;
-                if (!this.hasOwnProperty(actionName)) return;
-
-                let action = this[actionName];
-
-                action.call(this);
-
-                this.closeModal();
-            });
-        });
+        this.openConfirmModal(button.dataset.modalid);
     },
     resetGame: function() {
         this.model.reset();
@@ -258,6 +238,30 @@ const controller = {
         } else {
             this.view.grid.hide();
         }
+    },
+    openConfirmModal: function(modalId) {
+        let template = this.app.querySelector('#' + modalId);
+        let modal = document.importNode(template.content, true).querySelector('.js-modal');
+        app.append(modal); 
+
+        this.state.modal.isActive = true;
+        this.state.modal.element = modal;
+
+        this.view.showOverlay();
+        this.view.showModal(modal, () => {
+            modal.addEventListener('click', event => {
+                let actionName = event.target.dataset.prop;
+
+                if (actionName === undefined) return;
+                if (!this.hasOwnProperty(actionName)) return;
+
+                let action = this[actionName];
+
+                action.call(this);
+
+                this.closeModal();
+            });
+        });
     },
     closeModal: function() {
         this.view.hideOverlay();

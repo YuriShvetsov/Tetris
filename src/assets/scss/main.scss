@@ -32,16 +32,48 @@ input[type=checkbox] {
     align-items: flex-start;
     width: 100%;
     min-height: 100vh;
-    background: #333;
-    background: url(../images/background-day.png) no-repeat, linear-gradient(45deg, #ff5125, #0059fb);
-    background-position: center, center;
-    background-size: cover, cover;
 }
 
-.app_theme_dark {
-    background: url(../images/background-night.png) no-repeat, linear-gradient(to bottom, #12151d, #2455dd);
-    background-position: center, center;
-    background-size: cover, cover;
+.app::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: url(../images/earth.png), url(../images/day-sky.png), linear-gradient(45deg, #ff5125, #0059fb);
+    background-position: center;
+    background-size: cover;
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+    transition-delay: 0;
+}
+
+.app::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: url(../images/earth.png), url(../images/night-sky.png), linear-gradient(45deg, #161b4d, #12121c);
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+    transition-delay: 500ms;
+}
+
+.app_theme_dark::before {
+    opacity: 0;
+    transition-delay: 1000ms;
+}
+
+.app_theme_dark::after {
+    opacity: 1;
+    transition-delay: 0;
 }
 
 .app__container {

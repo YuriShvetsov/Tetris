@@ -59,7 +59,7 @@ const model = {
         width: null,
         height: null,
         color: '#aaaaaa',
-        map: null // двумерный массив длиной width * height со значениями boolean
+        map: null // двумерный массив width * height со значениями boolean
     },
     colors: [
         '#ff5526', // orange
