@@ -218,7 +218,7 @@ const controller = {
         if (checkbox.checked) {
             this.view.darkTheme.activate();
         } else {
-            this.view.darkTheme.unActivate();
+            this.view.darkTheme.deactivate();
         }
 
         if (this.model.getGameStatus() == 'paused') {
