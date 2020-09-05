@@ -217,13 +217,13 @@ const view = {
             if (state.isActive) {
                 this.activate();
             } else {
-                this.unActivate();
+                this.deactivate();
             }
         },
         activate: function() {
             this.element.classList.add('app_theme_dark');
         },
-        unActivate: function() {
+        deactivate: function() {
             this.element.classList.remove('app_theme_dark');
         }
     },
@@ -237,6 +237,8 @@ const view = {
         setTimeout(() => {
             modal.classList.remove('modal_visible');
             modal.classList.remove('modal_hidden');
+
+            modal.remove();
         }, 200);
     }
 };
