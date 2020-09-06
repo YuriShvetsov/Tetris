@@ -170,6 +170,7 @@ const controller = {
         this.view.updateStats(this.model.getStats());
         this.view.clearGameFieldCanvas();
         this.view.clearNextFigureCanvas();
+        this.closeModal();
     },
     finishGame: function() {
         this.state.game.isLaunched = false;
@@ -213,59 +214,55 @@ const controller = {
         this.state.popup.element = null;
     },
     toggleDarkTheme: function(checkbox) {
-        this.model.setDarkTheme(checkbox.checked);
+        let isChecked = checkbox.checked;
 
-        if (checkbox.checked) {
+        this.model.setDarkTheme(isChecked);
+
+        if (isChecked) {
             this.view.darkTheme.activate();
         } else {
             this.view.darkTheme.deactivate();
         }
 
-        if (this.model.getGameStatus() == 'paused') {
-            let curFigure = this.model.getCurFigure();
-            let world = this.model.getWorld();
-
-            this.view.clearGameFieldCanvas();
-            this.view.renderCurFigure(curFigure);
-            this.view.renderWorldMap(world);
-        }
+        this.render();
     },
     toggleGrid: function(checkbox) {
-        this.model.setGrid(checkbox.checked);
+        let isChecked = checkbox.checked;
 
-        if (checkbox.checked) {
-            this.view.grid.show();
-        } else {
-            this.view.grid.hide();
-        }
+        this.model.setGrid(isChecked);
+
+        if (isChecked) this.view.grid.show();
+        else this.view.grid.hide(); 
     },
     openConfirmModal: function(modalId) {
-        let template = this.app.querySelector('#' + modalId);
-        let modal = document.importNode(template.content, true).querySelector('.js-modal');
+        let modalTemplate = this.app.querySelector('#' + modalId);
+        let modalContent = document.importNode(modalTemplate.content, true);
+        let modal = modalContent.querySelector('.js-modal');
+
         app.append(modal); 
 
         this.state.modal.isActive = true;
         this.state.modal.element = modal;
 
         this.view.showOverlay();
-        this.view.showModal(modal, () => {
+        
+        this.view.openModal(modal, () => {
             modal.addEventListener('click', event => {
                 let actionName = event.target.dataset.prop;
 
                 if (actionName === undefined) return;
+
                 if (!this.hasOwnProperty(actionName)) return;
 
                 let action = this[actionName];
 
                 action.call(this);
-
-                this.closeModal();
             });
         });
     },
     closeModal: function() {
         this.view.hideOverlay();
-        this.view.hideModal(this.state.modal.element);
+        this.view.closeModal(this.state.modal.element);
 
         this.state.isActive = false;
         this.state.element = null;
