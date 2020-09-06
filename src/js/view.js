@@ -227,11 +227,11 @@ const view = {
             this.element.classList.remove('app_theme_dark');
         }
     },
-    showModal: function(modal, callback) {    
+    openModal: function(modal, callback) {    
         modal.classList.add('modal_visible');
         callback();
     },
-    hideModal: function(modal) {
+    closeModal: function(modal) {
         modal.classList.add('modal_hidden');
 
         setTimeout(() => {

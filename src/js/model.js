@@ -86,7 +86,7 @@ const model = {
             counter: 0
         },
         game: {
-            status: 'new', // is_launched, is_over, is_paused
+            status: 'new', // launched, paused, finished
             statsIsChanged: false,
             nextFigureIsUpdated: false,
             gameWorldIsChanged: false
@@ -101,7 +101,7 @@ const model = {
         this.initState();
     },
     initState: function() {
-        // localStorage.setItem('tetris', JSON.stringify(null)); // Remove!
+        // localStorage.setItem('tetris', JSON.stringify(null)); // Erase current data in LS... Remove this string =)
 
         let data = this.readStateFromLS() || {
             darkTheme: this.state.app.darkTheme,
@@ -170,6 +170,8 @@ const model = {
         return this.state.app;
     },
     setDarkTheme: function(bool) {
+        this.state.game.gameWorldIsChanged = true;
+
         if (bool) {
             this.world.color = '#ffffff';
         } else {
@@ -248,12 +250,8 @@ const model = {
         return this.state.game.nextFigureIsUpdated;
     },
     setNextFigure: function() {
-        // 1. Выбрать отличную от текущей фигуру
+        // 1. Выбрать фигуру
         let randomFigure = Object.assign({}, this.getRandomItem(this.figures));
-
-        if (this.curFigure && randomFigure.name === this.curFigure.figure.name) {
-            return this.setNextFigure();
-        }
 
         // 2. Выбрать цвет
         let randomColor = this.getRandomItem(this.colors);
