@@ -224,7 +224,7 @@ const controller = {
             this.view.darkTheme.deactivate();
         }
 
-        this.render();
+        if (this.model.getGameStatus() == 'paused') this.render();
     },
     toggleGrid: function(checkbox) {
         let isChecked = checkbox.checked;
